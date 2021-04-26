@@ -1,11 +1,11 @@
 import React from 'react'
-import { ToDoList } from './components/ToDoList/ToDoList'
+import { PosicionesLaborales } from './components/PosicionesLaborales/PosicionesLaborales'
 
 function App () {
 
     return (
     <>
-      <ToDoList/>
+      <PosicionesLaborales/>
     </>
   );
   

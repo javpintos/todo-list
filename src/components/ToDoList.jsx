@@ -1,19 +1,16 @@
-import React from "react";
-import { ToDoItem } from "./ToDoItem";
+import React from "react"
+import { ToDoItem } from "./ToDoItem"
 
 export const ToDoList = function (props) {
   return (
-    <div className="row">
       <ul className="list-group">
-        {props.items.map((item, index) => (
+        {props.offers.map((offer, index) =>
           <ToDoItem
             key={index}
-            item={item}
+            offer={offer}
             index={index}
-            onDelete={props.onDelete}
-          />
-        ))}
+            onDelete={props.onDelete}/>
+        )}
       </ul>
-    </div>
-  );
-};
+  )
+}

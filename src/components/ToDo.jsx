@@ -6,34 +6,39 @@ export class ToDo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
-    };
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
+      offers: []
+    }
+    this.addOffer = this.addOffer.bind(this);
+    this.deleteOffer = this.deleteOffer.bind(this);
   }
 
-  addItem(newItem) {
+  addOffer(newOffer) {
     this.setState({
-      items: [...this.state.items, newItem], //... sprite operator: trae todos los elementos que ya tiene el arreglo original para actualizarlo y no sobreescribirlo
-    });
+      offers: [...this.state.offers, newOffer] //... sprite operator: trae todos los elementos que ya tiene el arreglo original para actualizarlo y no sobreescribirlo
+    })
   }
 
-  deleteItem(id) {
-    const newArray = this.state.items.filter((item, index) => index !== id);
+  deleteOffer(id) {
+    const newArray = this.state.offers.filter(
+      (offer, index) => index !== id)
     this.setState({
-      items: newArray,
+      offers: newArray
     });
   }
 
   render() {
     return (
       <>
-        <div className="container">
-          <ToDoForm onSubmit={this.addItem} />
-          <hr className="my-4"/>
-          <ToDoList items={this.state.items} onDelete={this.deleteItem} />
+        <div className="row">
+          <div className="col">
+              <ToDoForm onSubmit={this.addOffer} />
+          </div>
+           <div className="col">
+              <ToDoList offers={this.state.offers}
+              onDelete={this.deleteOffer} />
+          </div>
         </div>
       </>
-    );
+    )
   }
 }

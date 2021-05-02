@@ -1,14 +1,10 @@
 import React from 'react'
-import { ToDoList } from './components/ToDoList/ToDoList'
+import { ToDo } from './components/ToDo'
 
-function App () {
-
-    return (
-    <>
-      <ToDoList/>
-    </>
-  );
-  
-}
+const App = () => (
+    <div className="container">
+      <ToDo />
+    </div>
+)
 
 export default App;

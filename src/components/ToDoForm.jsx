@@ -37,7 +37,7 @@ export class ToDoForm extends React.Component {
               country: this.state.country,
               place: this.state.place
           }
-          this.props.onSubmit(offer)
+          this.props.addOffer(offer);
 
           this.setState({
               name: "",
@@ -54,7 +54,8 @@ export class ToDoForm extends React.Component {
     render() {
         return (
           <>
-            <h1>Puestos laborales</h1>
+          <br />
+            <h1>Posiciones laborales</h1>
             <form onSubmit={(e) => this.submit(e)}>
               <br />
               <input

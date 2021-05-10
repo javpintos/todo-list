@@ -31,7 +31,7 @@ export class ToDo extends React.Component {
       <>
         <div className="row">
           <div className="col">
-              <ToDoForm onSubmit={this.addOffer} />
+              <ToDoForm addOffer={this.addOffer} />
           </div>
            <div className="col">
               <ToDoList offers={this.state.offers}

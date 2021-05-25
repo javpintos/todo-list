@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 export const NavBarToDo = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     <div className="container-fluid">
       <Link className="navbar-brand" to="/">
-        Posiciones Laborales
+        Puestos laborales
       </Link>
       <button
         className="navbar-toggler"
@@ -21,23 +21,21 @@ export const NavBarToDo = () => (
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <Link className="nav-link active" to="/business">
+            <Link className="nav-link active" to="/businesses">
               Empresas
             </Link>
           </li>
         </ul>
       </div>
-
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <Link className="nav-link active" to="/cities">
-              Ciudades
+            <Link className="nav-link active" to="/places">
+              Lugares
             </Link>
           </li>
         </ul>
       </div>
-
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">

@@ -1,25 +1,62 @@
 import React from "react";
+import { checkString } from "../utils/stringUtils";
 
 export class BusinessForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      business: "",
-      city: "",
-      country: "",
+      businessName: "",
+      place: {
+        placeName: "",
+        country: {
+          name: "",
+        },
+      },
+      places: [],
     };
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem("places") != null) {
+      this.setState({
+        places: JSON.parse(localStorage.getItem("places")),
+      });
+    }
   }
 
   submitForm = (e) => {
     e.preventDefault();
 
-    const newBusiness = {
-      business: this.state.business,
-      city: this.state.city,
-      country: this.state.country,
-    };
+    const {
+      businessName,
+      place: { placeName },
+      place: {country: { name }}
+    } = this.state;
 
-    this.props.addBusiness(newBusiness);
+    if (
+      checkString(businessName) &&
+      checkString(placeName) &&
+      checkString(name)
+    ) {
+      const newBusiness = {
+        businessName: businessName,
+        place: this.state.place,
+      };
+
+      this.props.addBusiness(newBusiness);
+
+      this.setState({
+        businessName: "",
+        place: {
+          placeName: "",
+          country: {
+            name: "",
+          },
+        },
+      });
+    } else {
+      alert("Faltan completar datos");
+    }
   };
 
   handleInput = (e) => {
@@ -29,58 +66,73 @@ export class BusinessForm extends React.Component {
     });
   };
 
+  handleSelect = (e) => {
+    e.preventDefault();
+    this.setState({
+      place: JSON.parse(e.target.value),
+    });
+  };
+
   render() {
     return (
-      <>
-        <br />
-        <form onSubmit={(e) => this.submitForm(e)}>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              Empresa
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleFormControlInput1"
-              name="business"
-              placeholder="Ingrese empresa"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.business}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput2" className="form-label">
-              Ciudad
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleFormControlInput2"
-              name="city"
-              placeholder="Ingrese ciudad"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.city}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput3" className="form-label">
-              País
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleFormControlInput3"
-              name="country"
-              placeholder="Ingrese país"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.country}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Agregar
-          </button>
-        </form>
-      </>
+      <form onSubmit={(e) => this.submitForm(e)}>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlInput1" className="form-label">
+            Nombre
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="exampleFormControlInput1"
+            name="businessName"
+            placeholder="Ingrese nombre de la empresa"
+            onChange={(e) => this.handleInput(e)}
+            value={this.state.businessName}
+          />
+        </div>
+
+        <div className="input-group mb-3">
+          <label className="input-group-text" htmlFor="inputGroupSelect01">
+            Lugar
+          </label>
+          <select
+            className="form-select"
+            id="inputGroupSelect01"
+            onChange={(e) => this.handleSelect(e)}
+            value={JSON.stringify(this.state.place)}
+          >
+            <option value={JSON.stringify({})}>Select option</option>
+            {this.state.places.map((place, index) => (
+              <option key={index + 1} value={JSON.stringify(place)}>
+                {place.placeName}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="input-group mb-3">
+          <label className="input-group-text" htmlFor="inputGroupSelect02">
+            País
+          </label>
+          <select
+            className="form-select"
+            id="inputGroupSelect02"
+            onChange={(e) => this.handleSelect(e)}
+            value={JSON.stringify(this.state.place)}
+          >
+            <option value={JSON.stringify({})}>Select option</option>
+            {this.state.places.map((place, index) => (
+              <option key={index + 1} value={JSON.stringify(place)}>
+                {place.country.name}
+              </option>
+            ))}
+          </select>
+        </div> 
+
+        <button type="submit" className="btn btn-primary">
+          Agregar
+        </button>
+      </form>
     );
   }
 }

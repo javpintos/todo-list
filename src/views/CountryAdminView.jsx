@@ -1,5 +1,10 @@
-import React from "react";
+import React from 'react'
 import { CountryForm } from "../components/CountryForm";
+import { CountryList } from "../components/CountryList";
+
+const style = {
+  paddingTop: "30px",
+};
 
 export class CountryAdminView extends React.Component {
   constructor(props) {
@@ -23,17 +28,35 @@ export class CountryAdminView extends React.Component {
     });
   };
 
+  deleteCountry = (indexCountry) => {
+    const newArr = this.state.countries.filter(
+      (_, index) => index !== indexCountry
+    );
+
+    this.setState({
+      countries: newArr,
+    });
+  };
+
   saveData = () => {
-    window.localStorage.setItem("countries", JSON.stringify(this.state.countries));
+    window.localStorage.setItem(
+      "countries",
+      JSON.stringify(this.state.countries)
+    );
   };
 
   render() {
     return (
-      <div>
-        <CountryForm addCountry={this.addCountry} />
-        <button onClick={this.saveData} className="btn btn-warning">
-          Guardar
-        </button>
+      <div className="row" style={style}>
+        <div className="col">
+          <CountryForm addCountry={this.addCountry} />
+        </div>
+        <div className="col">
+          <CountryList
+            countries={this.state.countries}
+            onDelete={this.deleteCountry}
+          />
+        </div>
       </div>
     );
   }

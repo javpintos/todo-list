@@ -1,6 +1,10 @@
-import React from "react";
-import { ToDoForm } from "../components/ToDoForm";
-import { ToDoList } from "../components/ToDoList";
+import React from 'react'
+import { OfferForm } from '../components/OfferForm'
+import { OfferList } from '../components/OfferList'
+
+const style = {
+    paddingTop: "30px"
+}
 
 export class MainView extends React.Component {
   constructor(props) {
@@ -8,35 +12,47 @@ export class MainView extends React.Component {
     this.state = {
       offers: [],
     };
-    this.addOffer = this.addOffer.bind(this);
-    this.deleteOffer = this.deleteOffer.bind(this);
   }
 
-  addOffer(newOffer) {
-    this.setState({
-      offers: [...this.state.offers, newOffer], //... sprite operator: trae todos los elementos que ya tiene el arreglo original para actualizarlo y no sobreescribirlo
-    });
+  componentDidMount() {
+    if (localStorage.getItem("offers") != null) {
+      this.setState({
+        offers: JSON.parse(localStorage.getItem("offers")),
+      });
+    }
   }
 
-  deleteOffer(id) {
-    const newArray = this.state.offers.filter((offer, index) => index !== id);
+  addOffer = (offer) => {
     this.setState({
-      offers: newArray,
+      offers: [...this.state.offers, offer],
     });
-  }
+  };
+
+  deleteOffer = (indexOffer) => {
+    const newArr = this.state.offers.filter((_, index) => index !== indexOffer);
+
+    this.setState({
+      offers: newArr,
+    });
+  };
+
+  saveData = () => {
+    window.localStorage.setItem(
+      "offers",
+      JSON.stringify(this.state.offers)
+    );
+  };
 
   render() {
     return (
-      <>
-        <div className="row">
-          <div className="col">
-            <ToDoForm addOffer={this.addOffer} />
-          </div>
-          <div className="col">
-            <ToDoList offers={this.state.offers} onDelete={this.deleteOffer} />
-          </div>
+      <div className="row" style={style}>
+        <div className="col">
+          <OfferForm addOffer={this.addOffer} />
         </div>
-      </>
+        <div className="col">
+          <OfferList offers={this.state.offers} onDelete={this.deleteOffer} />
+        </div>
+      </div>
     );
   }
 }

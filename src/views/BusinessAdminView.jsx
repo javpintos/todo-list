@@ -1,39 +1,62 @@
-import React from "react";
-import { BusinessForm } from "../components/BusinessForm";
+import React from 'react'
+import { BusinessForm } from '../components/BusinessForm'
+import { BusinessList } from "../components/BusinessList";
+
+const style = {
+  paddingTop: "30px",
+};
 
 export class BusinessAdminView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      businesss: [],
+      businesses: [],
     };
   }
 
   componentDidMount() {
-    if (localStorage.getItem("businesss") != null) {
+    if (localStorage.getItem("businesses") != null) {
       this.setState({
-        businesss: JSON.parse(localStorage.getItem("businesss")),
+        businesses: JSON.parse(localStorage.getItem("businesses")),
       });
     }
   }
 
   addBusiness = (business) => {
     this.setState({
-      businesss: [...this.state.businesss, business],
+      businesses: [...this.state.businesses, business],
+    });
+  };
+
+  deleteBusiness = (indexBusiness) => {
+    const newArr = this.state.businesses.filter(
+      (_, index) => index !== indexBusiness
+    );
+
+    this.setState({
+      businesses: newArr,
     });
   };
 
   saveData = () => {
-    window.localStorage.setItem("businesss", JSON.stringify(this.state.businesss));
+    window.localStorage.setItem(
+      "businesses",
+      JSON.stringify(this.state.businesses)
+    );
   };
 
   render() {
     return (
-      <div>
-        <BusinessForm addBusiness={this.addBusiness} />
-        <button onClick={this.saveData} className="btn btn-warning">
-          Guardar
-        </button>
+      <div className="row" style={style}>
+        <div className="col">
+          <BusinessForm addBusiness={this.addBusiness} />
+        </div>
+        <div className="col">
+          <BusinessList
+            businesses={this.state.businesses}
+            onDelete={this.deleteBusiness}
+          />
+        </div>
       </div>
     );
   }

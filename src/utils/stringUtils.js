@@ -1,3 +1,3 @@
-export const checkValue = (value) => (
-    value.trim() !== "" && value.trim() !== undefined && value.trim() !== null 
+export const checkString = (string) => (
+    string !== null && string !== undefined && string !== ""
 )

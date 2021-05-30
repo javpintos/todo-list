@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-export class OfferList extends React.Component {
+export class JobList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -10,20 +10,16 @@ export class OfferList extends React.Component {
 		};
 	}
 
-	toInfoOffer = (index) => {
+	toInfoJob = (index) => {
 		this.setState({
 			isRedirect: true,
 			index: index,
 		});
 	};
 
-	saveData = () => {
-		localStorage.setItem("offers", JSON.stringify(this.props.offers));
-	};
-
 	render() {
 		if (this.state.isRedirect) {
-			return <Redirect to={`/offer/${this.state.index}`} />;
+			return <Redirect to={`/job/${this.state.index}`} />;
 		} else {
 			return (
         <>
@@ -31,29 +27,39 @@ export class OfferList extends React.Component {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Nombre</th>
+                <th scope="col">Posición</th>
+                <th scope="col">Descripción</th>
                 <th scope="col">Empresa</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {this.props.offers.map((offer, index) => (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{offer.title}</td>
-                  <td>{offer.business.businessName}</td>
+              {this.props.jobs.map((job) => (
+                <tr key={job.id}>
+                  <th scope="row">{job.id}</th>
+                  <td>{job.position}</td>
+                  <td>{job.description}</td>
+                  <td>{job.organizationId}</td>
                   <td>
                     <button
                       type="button"
                       className="btn btn-info"
-                      onClick={() => this.toInfoOffer(index)}
+                      onClick={() => this.toInfoJob(job.id)}
                     >
-                      Info
+                      Ver
                     </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                    >
+                      Modificar
+                    </button>
+
                     <button
                       type="button"
                       className="btn btn-danger"
-                      onClick={() => this.props.onDelete(index)}
+                      onClick={() => this.props.onDelete(job.id)}
                     >
                       Eliminar
                     </button>
@@ -62,9 +68,6 @@ export class OfferList extends React.Component {
               ))}
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={this.saveData}>
-            Guardar datos
-          </button>
         </>
       );
 		}

@@ -1,22 +1,33 @@
 import React from "react";
+import { checkString } from "../app/utils/stringUtils";
 
 export class CountryForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: ""
+      name: "",
     };
   }
 
   submitForm = (e) => {
     e.preventDefault();
 
-    const newCountry = {
-      name: this.state.name,
-    };
+    const { name } = this.state;
 
-    this.props.addCountry(newCountry);
-  }
+    if (checkString(name)) {
+      const newCountry = {
+        name: name,
+      };
+
+      this.props.addCountry(newCountry);
+
+      this.setState({
+        name: "",
+      });
+    } else {
+      alert("Faltan completar datos");
+    }
+  };
 
   handleInput = (e) => {
     e.preventDefault();
@@ -25,7 +36,7 @@ export class CountryForm extends React.Component {
     });
   };
 
-  render(){
+  render() {
     return (
       <form onSubmit={(e) => this.submitForm(e)}>
         <div className="mb-3">
@@ -37,7 +48,7 @@ export class CountryForm extends React.Component {
             className="form-control"
             id="exampleFormControlInput1"
             name="name"
-            placeholder="Ingrese nombre del país"
+            placeholder="Nombre del país"
             onChange={(e) => this.handleInput(e)}
             value={this.state.name}
           />

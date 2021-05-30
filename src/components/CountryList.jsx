@@ -17,10 +17,6 @@ export class CountryList extends React.Component {
     });
   };
 
-  saveData = () => {
-    localStorage.setItem("countries", JSON.stringify(this.props.countries));
-  };
-
   render() {
     if (this.state.isRedirect) {
       return <Redirect to={`/country/${this.state.index}`} />;
@@ -36,22 +32,27 @@ export class CountryList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.countries.map((country, index) => (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
+              {this.props.countries.map((country) => (
+                <tr key={country.id}>
+                  <th scope="row">{country.id}</th>
                   <td>{country.name}</td>
                   <td>
                     <button
                       type="button"
                       className="btn btn-info"
-                      onClick={() => this.toInfoCountry(index)}
+                      onClick={() => this.toInfoCountry(country.id)}
                     >
-                      Info
+                      Ver
                     </button>
+
+                    <button type="button" className="btn btn-success">
+                      Modificar
+                    </button>
+
                     <button
                       type="button"
                       className="btn btn-danger"
-                      onClick={() => this.props.onDelete(index)}
+                      onClick={() => this.props.onDelete(country.id)}
                     >
                       Eliminar
                     </button>
@@ -60,9 +61,6 @@ export class CountryList extends React.Component {
               ))}
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={this.saveData}>
-            Guardar datos
-          </button>
         </>
       );
     }

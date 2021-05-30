@@ -1,32 +1,32 @@
 import React from "react";
 import { checkString } from "../app/utils/stringUtils";
 
-export class PlaceForm extends React.Component {
+export class OrganizationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      countrieId: "",
+      placeId: "",
     };
   }
 
   submitForm = (e) => {
     e.preventDefault();
 
-    const { name, countrieId } = this.state;
+    const { name, placeId } = this.state;
 
-    if (checkString(name) && checkString(countrieId)) {
-      const newPlace = {
+    if (checkString(name) && checkString(placeId)) {
+      const newOrganization = {
         name: name,
-        countrieId: parseInt(countrieId),
+        placeId: parseInt(placeId),
         //state: 0
       };
 
-      this.props.addPlace(newPlace);
+      this.props.addOrganization(newOrganization);
 
       this.setState({
         name: "",
-        countrieId: "",
+        placeId: ""
       });
     } else {
       alert("Faltan completar datos");
@@ -43,7 +43,7 @@ export class PlaceForm extends React.Component {
   handleSelect = (e) => {
     e.preventDefault();
     this.setState({
-      countrieId: e.target.value,
+      placeId: e.target.value,
     });
   };
 
@@ -59,10 +59,29 @@ export class PlaceForm extends React.Component {
             className="form-control"
             id="exampleFormControlInput1"
             name="name"
-            placeholder="Nombre del lugar"
+            placeholder="Nombre de la empresa"
             onChange={(e) => this.handleInput(e)}
             value={this.state.name}
           />
+        </div>
+
+        <div className="input-group mb-3">
+          <label className="input-group-text" htmlFor="inputGroupSelect01">
+            Lugar
+          </label>
+          <select
+            className="form-select"
+            id="inputGroupSelect01"
+            onChange={(e) => this.handleSelect(e)}
+            value={this.state.placeId}
+          >
+            <option value={""}>Select option</option>
+            {this.props.places.map((place) => (
+              <option key={place.id} value={place.id}>
+                {place.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="input-group mb-3">
@@ -73,12 +92,12 @@ export class PlaceForm extends React.Component {
             className="form-select"
             id="inputGroupSelect02"
             onChange={(e) => this.handleSelect(e)}
-            value={this.state.countrieId}
+            value={this.state.placeId}
           >
             <option value={""}>Select option</option>
-            {this.props.countries.map((country) => (
-              <option key={country.id} value={country.id}>
-                {country.name}
+            {this.props.places.map((place) => (
+              <option key={place.id} value={place.id}>
+                {place.countrieId}
               </option>
             ))}
           </select>

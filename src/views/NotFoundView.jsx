@@ -7,13 +7,13 @@ export class NotFoundView extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            isRedirect : false
+            isRediret : false
         }
     }
 
     redirectToHome = () => {
         this.setState({
-            isRedirect: true
+            isRediret: true
         })
     }
 
@@ -21,7 +21,7 @@ export class NotFoundView extends React.Component {
         return(
             <>
                 <button onClick={this.redirectToHome}>Volver a la home</button>
-                { this.state.isRedirect ? <Redirect to="/" /> : <p>Pagina no encontrada</p> }
+                { this.state.isRediret ? <Redirect to="/" /> : <p>Pagina no encontrada</p> }
             </>
         )
     }

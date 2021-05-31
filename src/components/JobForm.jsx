@@ -2,60 +2,82 @@ import React from "react";
 import { checkString } from "../app/utils/stringUtils";
 
 export class JobForm extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			position: "",
-			description: "",
-			organizationId: "",
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      position: "",
+      description: "",
+      organizationId: ""
+      /* organization: {
+        organizationId: "",
+        name: "",
+      },
+      place: {
+        placeId: "",
+        name: "",
+      },
+      country: {
+        countryId: "",
+        name: "",
+      }, 
+      organizations: [],
+      countries: [],
+      countries: [],*/
+    };
+  }
 
-	submitForm = (e) => {
-		e.preventDefault();
+  /* componentDidMount() {
+    this.setState({
+      organizations: this.props.organizations,
+      places: this.props.places,
+      countries: this.props.countries
+    });
+  } */
 
-		const { position, description, organizationId } = this.state;
+  submitForm = (e) => {
+    e.preventDefault();
 
-		if (
-			checkString(position) &&
-			checkString(description) &&
-			checkString(organizationId)
-		) {
-			const newJob = {
-				position: position,
-				description: description,
-				organizationId: parseInt(organizationId)
-				//state: 0
-			};
+    const { position, description, organizationId } = this.state;
 
-			this.props.addJob(newJob);
+    if (
+      checkString(position) &&
+      checkString(description) &&
+      checkString(organizationId)
+    ) {
+      const newJob = {
+        position: position,
+        description: description,
+        organizationId: parseInt(organizationId),
+      };
 
-			this.setState({
-				position: "",
-				description: "",
-				organizationId: "",
-			});
-		}else{
-            alert("Faltan completar datos")
-        }
-	};
+      this.props.addJob(newJob);
 
-	handleInput = (e) => {
-		e.preventDefault();
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
-	};
+      this.setState({
+        position: "",
+        description: "",
+        organizationId: "",
+      });
+    } else {
+      alert("Faltan completar datos");
+    }
+  };
 
-	handleSelect = (e) => {
-		e.preventDefault();
-		this.setState({
-			organizationId: e.target.value,
-		});
-	};
+  handleInput = (e) => {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
-	render() {
-		return (
+  handleSelect = (e) => {
+    e.preventDefault();
+    this.setState({
+      organizationId: e.target.value,
+    });
+  };
+
+  render() {
+    return (
       <form onSubmit={(e) => this.submitForm(e)}>
         <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -148,5 +170,5 @@ export class JobForm extends React.Component {
         </button>
       </form>
     );
-	}
+  }
 }

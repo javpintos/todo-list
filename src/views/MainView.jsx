@@ -100,29 +100,31 @@ export class MainView extends React.Component {
 
 	render() {
 		return (
-			<>
-				{this.state.withError && (
-					<div className="row" style={style}>
-						<div className="alert alert-danger" role="alert">
-							No se pudieron obtener datos desde el servidor
-						</div>
-					</div>
-				)}
-				<div className="row" style={style}>
-					<div className="col">
-						<JobForm
-							organizations={this.state.organizations}
-							addJob={this.addJob}
-						/>
-					</div>
-					<div className="col">
-						<JobList
-							jobs={this.state.jobs}
-							onDelete={this.removeJob}
-						/>
-					</div>
-				</div>
-			</>
-		);
+      <>
+        {this.state.withError && (
+          <div className="row" style={style}>
+            <div className="alert alert-danger" role="alert">
+              No se pudieron obtener datos desde el servidor
+            </div>
+          </div>
+        )}
+        <div className="row" style={style}>
+          <div className="col">
+            <JobForm
+              organizations={this.state.organizations}
+              places={this.state.places}
+              countries={this.state.countries}
+              addJob={this.addJob}
+            />
+          </div>
+          <div className="col">
+            <JobList
+              jobs={this.state.jobs}
+              onDelete={this.removeJob}
+            />
+          </div>
+        </div>
+      </>
+    );
 	}
 }
